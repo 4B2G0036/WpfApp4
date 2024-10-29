@@ -3,10 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:local="clr-namespace:WpfApp4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="451" Width="800">
+    <DockPanel LastChildFill="False">
+        <Menu Height="30" DockPanel.Dock="Top">
+            <MenuItem Height="30" Header="檔案" VerticalContentAlignment="Center">
+                <MenuItem Header="新增畫布" />
+                <MenuItem Header="開啟檔案" />
+            </MenuItem>
+        </Menu>
+        <ToolBarTray Height="40" DockPanel.Dock="Top">
+            <ToolBar Height="40" Width="400" Background="Bisque">
+                <Label Content="筆刷色彩" FontSize="14" VerticalContentAlignment="Center"/>
+                <xctk:ColorPicker x:Name="strokecolorpicker" Width="100" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown"/>
+            </ToolBar>
+        </ToolBarTray>
+        <Canvas x:Name="myCanvas" Width="799" Background="#FF458990" Height="331" MouseEnter="myCanvas_MouseEnter" DockPanel.Dock="Top"/>
+        <StatusBar Height="40" DockPanel.Dock="Bottom" Background="BlanchedAlmond">
+            <StatusBarItem Margin="0,-2,0,5">
+                <Label x:Name="statuslabel" Content="Ready" FontSize="14"/>
+            </StatusBarItem>
+            <StatusBarItem Margin="0,-2,0,5">
+                <Label x:Name="statuspoint" Content="(0, 0)" FontSize="14"/>
+            </StatusBarItem>
+        </StatusBar>
+    </DockPanel>
 </Window>

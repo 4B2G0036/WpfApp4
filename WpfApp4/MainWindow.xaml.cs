@@ -16,9 +16,23 @@ namespace WpfApp4
     /// </summary>
     public partial class MainWindow : Window
     {
+        Color strokeColor = Colors.Black;
+        Brush strokeBursh = Brushes.Black;
+        Point start, dest;
         public MainWindow()
         {
             InitializeComponent();
+            strokecolorpicker.SelectedColor = strokeColor;
+        }
+
+        private void myCanvas_MouseEnter(object sender, MouseEventArgs e)
+        {
+            myCanvas.Cursor = Cursors.Pen;
+        }
+
+        private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            start = e.GetPosition(myCanvas);
         }
     }
 }
