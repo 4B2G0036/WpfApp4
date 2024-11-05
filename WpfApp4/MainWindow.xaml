@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:local="clr-namespace:WpfApp4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="451" Width="800">
+        Title="MainWindow" Height="468" Width="800">
     <DockPanel LastChildFill="False">
         <Menu Height="30" DockPanel.Dock="Top">
             <MenuItem Height="30" Header="檔案" VerticalContentAlignment="Center">
@@ -20,13 +20,13 @@
                 <xctk:ColorPicker x:Name="strokecolorpicker" Width="100" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown"/>
             </ToolBar>
         </ToolBarTray>
-        <Canvas x:Name="myCanvas" Width="799" Background="#FF458990" Height="331" MouseEnter="myCanvas_MouseEnter" DockPanel.Dock="Top"/>
+        <Canvas x:Name="myCanvas" Width="799" Background="#FF458990" Height="331" MouseEnter="myCanvas_MouseEnter" DockPanel.Dock="Top" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown" MouseUp="myCanvas_MouseUp" MouseMove="myCanvas_MouseMove"/>
         <StatusBar Height="40" DockPanel.Dock="Bottom" Background="BlanchedAlmond">
             <StatusBarItem Margin="0,-2,0,5">
                 <Label x:Name="statuslabel" Content="Ready" FontSize="14"/>
             </StatusBarItem>
             <StatusBarItem Margin="0,-2,0,5">
-                <Label x:Name="statuspoint" Content="(0, 0)" FontSize="14"/>
+                <Label x:Name="statuspoint" Content="(0, 0) - (0, 0)" FontSize="14"/>
             </StatusBarItem>
         </StatusBar>
     </DockPanel>

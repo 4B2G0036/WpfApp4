@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace WpfApp4
 {
     /// <summary>
@@ -24,15 +23,41 @@ namespace WpfApp4
             InitializeComponent();
             strokecolorpicker.SelectedColor = strokeColor;
         }
-
         private void myCanvas_MouseEnter(object sender, MouseEventArgs e)
         {
             myCanvas.Cursor = Cursors.Pen;
         }
-
-        private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void myCanvas_MouseLeftButtonDown(object sender,
+       MouseButtonEventArgs e)
         {
             start = e.GetPosition(myCanvas);
+            myCanvas.Cursor = Cursors.Cross;
         }
+        private void myCanvas_MouseUp(object sender,
+       MouseButtonEventArgs e)
+        {
+            var brush = new SolidColorBrush(strokeColor);
+            Line line = new Line
+            {
+                X1 = start.X,
+                Y1 = start.Y,
+                X2 = dest.X,
+                Y2 = dest.Y,
+                Stroke = brush,
+                StrokeThickness = 2
+            };
+            myCanvas.Children.Add(line);
+        }
+        private void strokeColorPicker_SelectedColorChanged(object sender,
+       RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            strokeColor = strokecolorpicker.SelectedColor.Value;
+        }
+        private void myCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            dest = e.GetPosition(myCanvas);
+            statuspoint.Content = $"({Convert.ToInt32(start.X)}, {Convert.ToInt32(start.Y)}) - ({Convert.ToInt32(dest.X)}, {Convert.ToInt32(dest.Y)})";
+        }
+
     }
 }
