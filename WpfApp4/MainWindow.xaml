@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:local="clr-namespace:WpfApp4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="468" Width="800">
+        Title="MainWindow" Height="468" Width="842">
     <DockPanel LastChildFill="False">
         <Menu Height="30" DockPanel.Dock="Top">
             <MenuItem Height="30" Header="檔案" VerticalContentAlignment="Center">
@@ -15,12 +15,17 @@
             </MenuItem>
         </Menu>
         <ToolBarTray Height="40" DockPanel.Dock="Top">
-            <ToolBar Height="40" Width="400" Background="Bisque">
-                <Label Content="筆刷色彩" FontSize="14" VerticalContentAlignment="Center"/>
+            <ToolBar Height="40" Background="Bisque" Margin="0,0,-71,0">
+                <Label Content="筆刷色彩" FontSize="14" VerticalContentAlignment="Center" FontWeight="Bold"/>
                 <xctk:ColorPicker x:Name="strokecolorpicker" Width="100" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown"/>
+                <Label Content="填滿色彩" FontSize="14" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                <xctk:ColorPicker x:Name="fillColorPicker" Width="100" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown"/>
+                <Slider x:Name="strokeThicknessSlider" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Minimum="1" IsSnapToTickEnabled="True" Margin="20,0,0,0" />
+                <Label Width="40" Margin="10, 0, 10, 0" Content="{Binding Value, ElementName = strokeThicknessSlider}" FontSize="14" Foreground="DarkGoldenrod" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" />
             </ToolBar>
+            <ToolBar Height="35" Background="#FFCAE0F9" Width="270" Margin="63,2,-63,2" />
         </ToolBarTray>
-        <Canvas x:Name="myCanvas" Width="799" Background="#FF458990" Height="331" MouseEnter="myCanvas_MouseEnter" DockPanel.Dock="Top" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown" MouseUp="myCanvas_MouseUp" MouseMove="myCanvas_MouseMove"/>
+        <Canvas x:Name="myCanvas" Width="840" Background="#FF458990" Height="331" MouseEnter="myCanvas_MouseEnter" DockPanel.Dock="Top" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown" MouseUp="myCanvas_MouseUp" MouseMove="myCanvas_MouseMove"/>
         <StatusBar Height="40" DockPanel.Dock="Bottom" Background="BlanchedAlmond">
             <StatusBarItem Margin="0,-2,0,5">
                 <Label x:Name="statuslabel" Content="Ready" FontSize="14"/>
