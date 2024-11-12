@@ -53,6 +53,24 @@ namespace WpfApp4
         {
             strokeColor = strokecolorpicker.SelectedColor.Value;
         }
+
+        private void ShapeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string shape = button.Tag.ToString();
+            MessageBox.Show(shape);
+        }
+
+        private void eraserButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void myCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             dest = e.GetPosition(myCanvas);
