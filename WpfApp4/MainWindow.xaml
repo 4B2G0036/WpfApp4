@@ -37,12 +37,12 @@
                     <Image Height="32" Width="37" Source="/polyline.png" />
                 </RadioButton>
                 <Separator/>
-                <RadioButton Width="34" Height="38" Tag="erase" Click="eraserButton_Click" >
+                <Button Width="34" Height="38" Tag="erase" Click="EraseButton_Click" >
                     <Image Height="32" Width="37" Source="/eraser.png" />
-                </RadioButton>
-                <RadioButton Width="34" Height="38" Tag="clear" Click="ClearButton_Click" >
+                </Button>
+                <Button Width="34" Height="38" Tag="clear" Click="ClearButton_Click" >
                     <Image Height="32" Width="37" Source="/trashcan.png" />
-                </RadioButton>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <Canvas x:Name="myCanvas" Width="840" Background="#FF458990" Height="331" MouseEnter="myCanvas_MouseEnter" DockPanel.Dock="Top" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown" MouseMove="myCanvas_MouseMove" MouseLeftButtonUp="myCanvas_MouseLeftButtonUp"/>
