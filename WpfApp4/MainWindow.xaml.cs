@@ -86,6 +86,7 @@ namespace WpfApp4
                         break;
                 }
             }
+            DisplayStatus();
         }
         private void strokeColorPicker_SelectedColorChanged(object sender,
        RoutedPropertyChangedEventArgs<Color?> e)
@@ -98,17 +99,20 @@ namespace WpfApp4
             var targetRadioButton = sender as RadioButton;
             shapeType = targetRadioButton.Tag.ToString();
             actionType = "draw";
+            DisplayStatus();
         }
 
         private void EraseButton_Click(object sender, RoutedEventArgs e)
         {
             actionType = "erase";
+            DisplayStatus();
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             actionType = "clear";
             myCanvas.Children.Clear();
+            DisplayStatus();
         }
 
         private void fillColorPicker_SelectColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
@@ -147,14 +151,13 @@ namespace WpfApp4
                     polyline.StrokeThickness = strokeThickness;
                     break;
             }
+            DisplayStatus();
         }
 
         private void strokeThicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             strokeThickness = (int)strokeThicknessSlider.Value;
         }
-
-        
 
         private void myCanvas_MouseMove(object sender, MouseEventArgs e)
         {
@@ -213,13 +216,26 @@ namespace WpfApp4
                     myCanvas.Children.Clear();
                     break;
             }
+        }
 
+        private void SaveCanvas_Click(object sender, RoutedEventArgs e)
+        {
 
         }
 
         private void DisplayStatus()
         {
+            if(actionType != "draw")
+                statusAction.Content = $"{actionType}";
+            else
+                statusAction.Content = $"繪圖模式: {shapeType}";
+
             statuspoint.Content = $"({Convert.ToInt32(start.X)}, {Convert.ToInt32(start.Y)}) - ({Convert.ToInt32(dest.X)}, {Convert.ToInt32(dest.Y)})";
+            int lineCount = myCanvas.Children.OfType<Line>().Count();
+            int rectangleCount = myCanvas.Children.OfType<Rectangle>().Count();
+            int ellipseCount = myCanvas.Children.OfType<Ellipse>().Count();
+            int polylineCount = myCanvas.Children.OfType<Polyline>().Count();
+            statusShape.Content = $"Lines: {lineCount}, Rectangles: {rectangleCount}, Ellipses: {ellipseCount}, Polylines: {polylineCount}";
         }
 
     }
