@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Microsoft.Win32;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -129,26 +131,38 @@ namespace WpfApp4
             {
                 case "line":
                     var line = myCanvas.Children.OfType<Line>().LastOrDefault();
-                    line.Stroke = strokeBrush;
-                    line.StrokeThickness = strokeThickness;
+                    if (line != null)
+                    {
+                        line.Stroke = strokeBrush;
+                        line.StrokeThickness = strokeThickness;
+                    }
                     break;
                 case "rectangle":
                     var rectangle = myCanvas.Children.OfType<Rectangle>().LastOrDefault();
-                    rectangle.Stroke = strokeBrush;
-                    rectangle.Fill = fillBrush;
-                    rectangle.StrokeThickness = strokeThickness;
+                    if (rectangle != null)
+                    {
+                        rectangle.Stroke = strokeBrush;
+                        rectangle.Fill = fillBrush;
+                        rectangle.StrokeThickness = strokeThickness;
+                    }
                     break;
                 case "ellipse":
                     var ellipse = myCanvas.Children.OfType<Ellipse>().LastOrDefault();
-                    ellipse.Stroke = strokeBrush;
-                    ellipse.Fill = fillBrush;
-                    ellipse.StrokeThickness = strokeThickness;
+                    if (ellipse != null)
+                    {
+                        ellipse.Stroke = strokeBrush;
+                        ellipse.Fill = fillBrush;
+                        ellipse.StrokeThickness = strokeThickness;
+                    }
                     break;
                 case "polyline":
                     var polyline = myCanvas.Children.OfType<Polyline>().LastOrDefault();
-                    polyline.Stroke = strokeBrush;
-                    polyline.Fill = fillBrush;
-                    polyline.StrokeThickness = strokeThickness;
+                    if (polyline != null)
+                    {
+                        polyline.Stroke = strokeBrush;
+                        polyline.Fill = fillBrush;
+                        polyline.StrokeThickness = strokeThickness;
+                    }
                     break;
             }
             DisplayStatus();
@@ -207,29 +221,54 @@ namespace WpfApp4
                     var shape = e.OriginalSource as Shape;
                     myCanvas.Cursor = Cursors.Hand;
                     myCanvas.Children.Remove(shape);
-                    if (myCanvas.Children.Count == 0)
-                    {
-                        myCanvas.Cursor = Cursors.Arrow;
-                    }
-                    break;
-                case "clear": //清除
-                    myCanvas.Children.Clear();
+                    if (myCanvas.Children.Count == 0) myCanvas.Cursor = Cursors.Arrow;
                     break;
             }
         }
 
         private void SaveCanvas_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "儲存畫布",
+                Filter = "PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*",
+                DefaultExt = ".png"
+            };
 
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                int w = Convert.ToInt32(myCanvas.RenderSize.Width);
+                int h = Convert.ToInt32(myCanvas.RenderSize.Height);
+
+                RenderTargetBitmap renderBitmap = new RenderTargetBitmap(w, h, 96d, 96d, PixelFormats.Pbgra32);
+
+                renderBitmap.Render(myCanvas);
+
+                BitmapEncoder encoder;
+                string extension = System.IO.Path.GetExtension(saveFileDialog.FileName).ToLower();
+                switch (extension)
+                {
+                    case ".jpg":
+                        encoder = new JpegBitmapEncoder();
+                        break;
+                    default:
+                        encoder = new PngBitmapEncoder();
+                        break;
+                }
+
+                encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+
+                using (FileStream outStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                {
+                    encoder.Save(outStream);
+                }
+            }
         }
 
         private void DisplayStatus()
         {
-            if(actionType != "draw")
-                statusAction.Content = $"{actionType}";
-            else
-                statusAction.Content = $"繪圖模式: {shapeType}";
-
+            if (actionType != "draw") statusAction.Content = $"{actionType}";
+            else statusAction.Content = $"繪圖模式: {shapeType}";
             statuspoint.Content = $"({Convert.ToInt32(start.X)}, {Convert.ToInt32(start.Y)}) - ({Convert.ToInt32(dest.X)}, {Convert.ToInt32(dest.Y)})";
             int lineCount = myCanvas.Children.OfType<Line>().Count();
             int rectangleCount = myCanvas.Children.OfType<Rectangle>().Count();

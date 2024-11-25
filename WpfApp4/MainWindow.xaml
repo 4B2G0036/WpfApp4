@@ -53,7 +53,7 @@
                 <Label x:Name="statuspoint" Content="(0, 0) - (0, 0)" FontSize="14" Width="200"/>
             </StatusBarItem>
             <StatusBarItem Width="405">
-                <Label x:Name="statusShape" Content="" FontSize="14" Width="200"/>
+                <Label x:Name="statusShape" Content="" FontSize="14" Width="330"/>
             </StatusBarItem>
         </StatusBar>
     </DockPanel>
